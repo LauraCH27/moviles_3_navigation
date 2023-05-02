@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View,TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View,TouchableOpacity,Switch } from 'react-native';
 import { TextInput, Button} from 'react-native-paper';
 // Importar componentes para la navegación y generación de la pila de screens
 import { NavigationContainer } from '@react-navigation/native'
@@ -179,6 +179,8 @@ function HomeScreen({navigation}){
   );
 }
 function ProductsScreen({navigation}){
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   
   return(
     <View style={styles.container}>
@@ -195,13 +197,15 @@ function ProductsScreen({navigation}){
       mode="outlined"
       right={<TextInput.Icon icon=""/>} >
       </TextInput>
-      <TextInput
-      style={{marginBottom:10}}
-      Estado
-      mode=""
-      right={<TextInput.Icon icon="eye"/>} 
-      >
-      </TextInput>
+      <Switch
+        trackColor={{ false: "#767577", true: "#81b0ff" }}
+        thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+        ios_backgroundColor="#3e3e3e"
+        onValueChange={toggleSwitch}
+        value={isEnabled}
+      />
+      <Text>{isEnabled ? "Disponible" : "No disponible"}</Text>
+      
     </View>
   );
 }

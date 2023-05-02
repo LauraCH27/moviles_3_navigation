@@ -179,11 +179,29 @@ function HomeScreen({navigation}){
   );
 }
 function ProductsScreen({navigation}){
-  let title = "Este es el titulo"
-  let fullname = "Pepito Perez"
+  
   return(
     <View style={styles.container}>
-      <Text style={{marginBottom:10}}>Estamos en Productos</Text>
+      <Text style={{marginBottom:10,fontFamily:"sans-serif", fontSize:20}}>Auto</Text>
+      <TextInput
+      style={{marginBottom:10}}
+      label="Número de placa"
+      mode="outlined"
+      right={<TextInput.Icon icon=""/>}>
+        </TextInput>
+      <TextInput
+      style={{marginBottom:10}}
+      label="Marca"
+      mode="outlined"
+      right={<TextInput.Icon icon=""/>} >
+      </TextInput>
+      <TextInput
+      style={{marginBottom:10}}
+      Estado
+      mode=""
+      right={<TextInput.Icon icon="eye"/>} 
+      >
+      </TextInput>
     </View>
   );
 }

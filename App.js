@@ -39,19 +39,40 @@ function RegistrationScreen({navigation}) {
   const[errorname,setErrorname]=useState('')
   const[errormess,setErrormess]=useState('')
   const handleRegister = () => {
+
+    const nameRegex = /^[a-zA-Z\s]*$/;
+    const usernameRegex = /^[a-zA-Z0-9]*$/;
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).+$/;
+  
+    if (!nameRegex.test(name)) {
+      alert('El nombre debe contener solo letras y espacios');
+      return;
+    }
+  
+    if (!usernameRegex.test(username)) {
+      alert('El nombre de usuario debe contener solo letras y números');
+      return;
+    }
+  
+    if (!passwordRegex.test(password)) {
+      alert('La contraseña debe contener al menos una letra y un número');
+      return;
+    }
+  
+
+
     const newUser = {
       name: name,
       username: username,
       password: password
     }; 
     users.push(newUser);
+    navigation.navigate('Home');
     setName('');
     setUsername('');
     setPassword('');
     console.log(users);
-
   };
-
   useEffect(() => {
     console.log(users);
   }, [users]);
@@ -125,7 +146,6 @@ function RegistrationScreen({navigation}) {
 <Text style={{color:'orange'}}>{errormess}</Text>  
         <TouchableOpacity onPress={() => {
             handleRegister();
-            navigation.navigate('Home');
           }}>
         <Text style={{color:'red', fontSize:20, marginTop:20}}>Registrarse</Text>
       </TouchableOpacity>

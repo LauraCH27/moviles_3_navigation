@@ -13,7 +13,7 @@ import { useState,useEffect } from 'react';
 
 let users = [
   {username:'hruiz',name:'Humberto Ruiz',password:'11a', role:1},
-  {username:'jdoe',name:'John Doe',password:'22a', role:2},
+  {username:'jode',name:'John Doe',password:'22a', role:2},
   {username:'richarley12',name:'R',password:'33c',role:2}
 ]
 const Stack = createNativeStackNavigator();

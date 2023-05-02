@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View,TouchableOpacity,Switch } from 'react-native';
+import { StyleSheet, Text, View,TouchableOpacity,Switch} from 'react-native';
 import { TextInput, Button} from 'react-native-paper';
 // Importar componentes para la navegación y generación de la pila de screens
 import { NavigationContainer } from '@react-navigation/native'
@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons} from '@expo/vector-icons'
 import contacts from './screens/contacts';
 import { useState,useEffect } from 'react';
+ 
 
 // Crear constante para generar las rutas de los screens
 
@@ -58,9 +59,6 @@ function RegistrationScreen({navigation}) {
       alert('La contraseña debe contener al menos una letra y un número');
       return;
     }
-  
-
-
     const newUser = {
       name: name,
       username: username,
@@ -198,7 +196,7 @@ function HomeScreen({navigation}){
     </View>
   );
 }
-function ProductsScreen({navigation}){
+function ProductsScreen({navigation,onPress}){
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   
@@ -225,6 +223,11 @@ function ProductsScreen({navigation}){
         value={isEnabled}
       />
       <Text>{isEnabled ? "Disponible" : "No disponible"}</Text>
+      <TouchableOpacity onPress={onPress}>
+      <View style={{ backgroundColor: 'blue', padding:10, marginTop:20 }}>
+        <Text style={{ color: 'white', textAlign: 'center', fontFamily:"Georgia" }}>Guardar</Text>
+      </View>
+    </TouchableOpacity>
       
     </View>
   );

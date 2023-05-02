@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons} from '@expo/vector-icons'
 import contacts from './screens/contacts';
+import ProductsScreen from './screens/Products';
 import { useState,useEffect } from 'react';
 
 // Crear constante para generar las rutas de los screens
@@ -198,33 +199,9 @@ function HomeScreen({navigation}){
     </View>
   );
 }
-function ProductsScreen({navigation}){
+// function ProductsScreen({navigation}){
   
-  return(
-    <View style={styles.container}>
-      <Text style={{marginBottom:10,fontFamily:"sans-serif", fontSize:20}}>Auto</Text>
-      <TextInput
-      style={{marginBottom:10}}
-      label="Número de placa"
-      mode="outlined"
-      right={<TextInput.Icon icon=""/>}>
-        </TextInput>
-      <TextInput
-      style={{marginBottom:10}}
-      label="Marca"
-      mode="outlined"
-      right={<TextInput.Icon icon=""/>} >
-      </TextInput>
-      <TextInput
-      style={{marginBottom:10}}
-      Estado
-      mode=""
-      right={<TextInput.Icon icon="eye"/>} 
-      >
-      </TextInput>
-    </View>
-  );
-}
+// }
 
 function HomeTabs(){
   return(
@@ -237,7 +214,7 @@ function HomeTabs(){
         tabBarInactiveBackgroundColor:'powderblue'
       }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} options={{
+      <Tab.Screen name="Home" component={ProductsScreen} options={{
         tabBarStyle:{display:'none'},
         tabBarIcon: (tabInfo) => (<MaterialIcons name="home" size={22}/>)
       }}/>

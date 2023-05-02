@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View,TouchableOpacity } from 'react-native';
 import { TextInput, Button} from 'react-native-paper';
 // Importar componentes para la navegación y generación de la pila de screens
 import { NavigationContainer } from '@react-navigation/native'
@@ -7,14 +7,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons} from '@expo/vector-icons'
 import contacts from './screens/contacts';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+
 // Crear constante para generar las rutas de los screens
 
 let users = [
-  {email:'hruiz@gmail.com',name:'Humberto Ruiz',password:'11', role:1},
-  {email:'jdoe@gmail.com',name:'John Doe',password:'22', role:2}
+  {username:'hruiz',name:'Humberto Ruiz',password:'11a', role:1},
+  {username:'jdoe',name:'John Doe',password:'22a', role:2},
+  {username:'richarley12',name:'R',password:'33c',role:2}
 ]
-
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -24,27 +25,129 @@ export default function App() {
       <Stack.Navigator
         initialRouteName='HomeTabs'
       >
-        <Stack.Screen name="HomeTabs" component={HomeTabs} options={{title:'Laura.HA'}}/>
+      <Stack.Screen style={{fontFamily:"fantasy", fontSize:30, color:'red'}} 
+        name="HomeTabs" component={HomeTabs} options={{title:'AutoCard'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+function RegistrationScreen({navigation}) {
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const[errorusername,setErrorusername]=useState('')
+  const[errorname,setErrorname]=useState('')
+  const[errormess,setErrormess]=useState('')
+  const handleRegister = () => {
+    const newUser = {
+      name: name,
+      username: username,
+      password: password
+    }; 
+    users.push(newUser);
+    setName('');
+    setUsername('');
+    setPassword('');
+    console.log(users);
+
+  };
+
+  useEffect(() => {
+    console.log(users);
+  }, [users]);
+
+  return (
+    <View style={styles.container}>
+      <Text style={{marginBottom:20,fontFamily:"fantasy", fontSize:20}} >Registro</Text>
+      <TextInput
+        style={{marginBottom:10}}
+        label="Usuario"
+        mode="outlined"
+        right={<TextInput.Icon icon="account"/>}
+        onFocus={()=>{setErrorusername(''),
+        setErrorname(''),
+        setErrormess('')}}
+        onChangeText={(username) => {
+          const regex = /^[a-zA-Z0-9]+$/;
+          if (regex.test(username)) {
+            setErrorusername('')
+            const userExists = users.find(user => user.username === username);
+              if (userExists) {
+              setErrorusername('Usuario repetido escriba otro usuario')
+              setUsername('')
+            }
+            setUsername(username);
+          }else{
+            setUsername('')
+            setErrorusername('Usuario incorrecto sólo letras y/o números');
+          }
+        }}
+        value={username}/>
+              <Text style={{color:'red'}}>{errorusername}</Text>
+        <TextInput
+        style={{marginBottom:10}}
+        label="Nombre"
+        mode="outlined"
+        right={<TextInput.Icon icon="account"/>}
+        onFocus={()=>{setErrorusername(''),
+        setErrorname(''),
+        setErrormess('')}}
+        onChangeText={(name) => {
+          const regex = /^[a-zA-Z\s]+$/;
+          if (regex.test(name)) {
+            setErrorname('')
+            setName(name);
+          }else{
+            setName('')
+            setErrorname('Nombre incorrecto sólo letras');
+          }
+        }}
+        value={name}></TextInput>
+        <Text style={{color:'red'}}>{errorname}</Text>
+<TextInput
+  style={{marginBottom:10}}
+  label="Contraseña"
+  mode="outlined"
+  right={<TextInput.Icon icon="eye"/>}
+  onFocus={()=>{setErrorusername(''),
+    setErrorname(''),
+    setErrormess('')}}
+  onChangeText={(password) => {
+    setPassword(password);
+    const regex = /^(?=.*[a-zA-Z])(?=.*[0-9]).+$/;
+    if (!regex.test(password)) {
+      setErrormess('Reucerda que la contraseña debe tener al menos una letra y un número');
+    } else {
+      setErrormess('');
+    }
+  }}
+  value={password} />
+<Text style={{color:'orange'}}>{errormess}</Text>  
+        <TouchableOpacity onPress={() => {
+            handleRegister();
+            navigation.navigate('Home');
+          }}>
+        <Text style={{color:'red', fontSize:20, marginTop:20}}>Registrarse</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
 
 function HomeScreen({navigation}){
-  const[email,setEmail]=useState('');
+  const[username,setUsername]=useState('');
   const[password,setPassword]=useState('');
   const[errormess,setErrormess]=useState('')
   return(
     <View style={styles.container}>
-      <Text style={{marginBottom:20}}>Inicio de Sesión</Text>
+      <Text style={{marginBottom:20, fontFamily:"sans-serif", fontSize:20}}>Inicio de Sesión</Text>
       <TextInput
       style={{marginBottom:10}}
-      label="Correo Electronico"
+      label="Nombre de usuario"
       mode="outlined"
       right={<TextInput.Icon icon="account"/>}
-      onChangeText={email=>setEmail(email)}
+      onChangeText={username=>setUsername(username)}
       onFocus={()=>{setErrormess('')}}
-      value={email}>
+      value={username}>
       </TextInput>
       <TextInput
       style={{marginBottom:10}}
@@ -58,24 +161,23 @@ function HomeScreen({navigation}){
       <Button icon="login" 
       mode="contained"
        onPress={() =>{
-      let findUser = users.find(usr=> usr.email == email && usr.password == password);
+      let findUser = users.find(usr=> usr.username == username && usr.password == password);
       if(findUser != undefined){
         setErrormess('')
-        const{name,email} = findUser
-        setEmail ('')
+        const{name,username} = findUser
+        setUsername('')
         setPassword('')
-        navigation.navigate('contacts',{name:name, email:email})
+        navigation.navigate('contacts',{name:name, username:username})
 
       }else{
         setErrormess('Correo y/o contraseña incorrecta');
       }
        }}
       > Iniciar sesión </Button>
-      <Text style={{color:'red'}}>{errormess}</Text>   
+      <Text style={{color:'red'}}>{errormess}</Text>
     </View>
   );
 }
-
 function ProductsScreen({navigation}){
   let title = "Este es el titulo"
   let fullname = "Pepito Perez"
@@ -101,6 +203,9 @@ function HomeTabs(){
         tabBarStyle:{display:'none'},
         tabBarIcon: (tabInfo) => (<MaterialIcons name="home" size={22}/>)
       }}/>
+       <Tab.Screen name="Registration" component={RegistrationScreen} options={{
+        tabBarIcon: (tabInfo) => (<MaterialIcons name="register" size={22}/>)
+      }}/>
       <Tab.Screen name="Products" component={ProductsScreen} options={{
         tabBarIcon: (tabInfo) => (<MaterialIcons name="apps" size={22}/>)
       }}/>
@@ -110,7 +215,6 @@ function HomeTabs(){
     </Tab.Navigator>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -119,8 +223,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-
 /* function Contacts({navigation,route}){
     return(
         <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>

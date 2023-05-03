@@ -2,12 +2,29 @@ import { StyleSheet, Text, View,TouchableOpacity,Switch } from 'react-native';
 import { TextInput, Button} from 'react-native-paper';
 import { useState,useEffect } from 'react';
 
-
+let cars=[
+    {placa:'ABC123',marca:'chevrolet',disponible:true},{placa:'CDE456',marca:'mazda',disponible:false},
+    {placa:'FGH789',marca:'ford',disponible:false},{placa:'IJK012',marca:'audi',disponible:true},
+]
 
 export default function ProductsScreen({navigation, onPress}) {
+    let [placa, setPlaca] = useState('');
+    let [marca, setMarca] = useState('');
+    let [disponible, setDisponible] = useState(false);
+    let toggleSwitch = () => setDisponible(previousState => !previousState);
 
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    const addCar= () => {
+    let newCar= {
+        placa: placa,
+        marca: marca,
+        disponible: disponible
+    };
+    cars.push(newCar);
+    setPlaca('');
+    setMarca('');
+    setDisponible(false);
+    console.log(cars);
+    }
 
     return(
         <View style={styles.container}>
@@ -16,23 +33,33 @@ export default function ProductsScreen({navigation, onPress}) {
           style={{marginBottom:10}}
           label="Número de placa"
           mode="outlined"
-          right={<TextInput.Icon icon=""/>}>
+          
+          right={<TextInput.Icon icon=""/>}
+          onChange={(placa)=> setPlaca(placa)
+          }
+          value={placa}
+          >
             </TextInput>
+          
+
           <TextInput
           style={{marginBottom:10}}
           label="Marca"
           mode="outlined"
+          onChange={(marca)=> setMarca(marca)
+          }
+          value={marca}
           right={<TextInput.Icon icon=""/>} >
           </TextInput>
+
           <Switch
             trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+            thumbColor={disponible ? "#f5dd4b" : "#f4f3f4"}
             ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
+            onValueChange={toggleSwitch}  
           />
-          <Text>{isEnabled ? "Disponible" : "No disponible"}</Text>
-          <TouchableOpacity onPress={onPress}>
+          <Text>{disponible ? "Disponible" : "No disponible"}</Text>
+          <TouchableOpacity onPress={()=> addCar(disponible)}>
           <View style={{ backgroundColor: 'blue', padding:10, marginTop:20 }}>
             <Text style={{ color: 'white', textAlign: 'center', fontFamily:"Georgia" }}>Guardar</Text>
           </View>

@@ -13,9 +13,9 @@ import { useState,useEffect } from 'react';
 // Crear constante para generar las rutas de los screens
 
 let users = [
-  {username:'hruiz',name:'Humberto Ruiz',password:'11a', role:1},
-  {username:'jdoe',name:'John Doe',password:'22a', role:2},
-  {username:'richarley12',name:'R',password:'33c',role:2}
+  {username:'hruiz',name:'Humberto Ruiz',password:'11a'},
+  {username:'jdoe',name:'John Doe',password:'22a'},
+  {username:'richarley12',name:'R',password:'33c'}
 ]
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

@@ -225,7 +225,7 @@ function ProductsScreen({navigation,onPress}){
       <Text>{isEnabled ? "Disponible" : "No disponible"}</Text>
       <TouchableOpacity onPress={onPress}>
       <View style={{ backgroundColor: 'blue', padding:10, marginTop:20 }}>
-        <Text style={{ color: 'white', textAlign: 'center', fontFamily:"Georgia" }}>Guardar</Text>
+        <Text style={{ color: 'white', textAlign: 'center', fontFamily:"fantasy",borderRadius:10 }}>Guardar</Text>
       </View>
     </TouchableOpacity>
       

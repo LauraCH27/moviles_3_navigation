@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View,TouchableOpacity,Switch} from 'react-native';
+import { StyleSheet, Text, View,TouchableOpacity } from 'react-native';
 import { TextInput, Button} from 'react-native-paper';
 // Importar componentes para la navegación y generación de la pila de screens
 import { NavigationContainer } from '@react-navigation/native'
@@ -7,14 +7,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons} from '@expo/vector-icons'
 import contacts from './screens/contacts';
+import ProductsScreen from './screens/Products';
 import { useState,useEffect } from 'react';
- 
 
 // Crear constante para generar las rutas de los screens
 
 let users = [
   {username:'hruiz',name:'Humberto Ruiz',password:'11a', role:1},
-  {username:'jode',name:'John Doe',password:'22a', role:2},
+  {username:'jdoe',name:'John Doe',password:'22a', role:2},
   {username:'richarley12',name:'R',password:'33c',role:2}
 ]
 const Stack = createNativeStackNavigator();
@@ -59,6 +59,9 @@ function RegistrationScreen({navigation}) {
       alert('La contraseña debe contener al menos una letra y un número');
       return;
     }
+  
+
+
     const newUser = {
       name: name,
       username: username,
@@ -196,42 +199,9 @@ function HomeScreen({navigation}){
     </View>
   );
 }
-function ProductsScreen({navigation,onPress}){
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+// function ProductsScreen({navigation}){
   
-  return(
-    <View style={styles.container}>
-      <Text style={{marginBottom:10,fontFamily:"sans-serif", fontSize:20}}>Auto</Text>
-      <TextInput
-      style={{marginBottom:10}}
-      label="Número de placa"
-      mode="outlined"
-      right={<TextInput.Icon icon=""/>}>
-        </TextInput>
-      <TextInput
-      style={{marginBottom:10}}
-      label="Marca"
-      mode="outlined"
-      right={<TextInput.Icon icon=""/>} >
-      </TextInput>
-      <Switch
-        trackColor={{ false: "#767577", true: "#81b0ff" }}
-        thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-        ios_backgroundColor="#3e3e3e"
-        onValueChange={toggleSwitch}
-        value={isEnabled}
-      />
-      <Text>{isEnabled ? "Disponible" : "No disponible"}</Text>
-      <TouchableOpacity onPress={onPress}>
-      <View style={{ backgroundColor: 'blue', padding:10, marginTop:20 }}>
-        <Text style={{ color: 'white', textAlign: 'center', fontFamily:"Georgia" }}>Guardar</Text>
-      </View>
-    </TouchableOpacity>
-      
-    </View>
-  );
-}
+// }
 
 function HomeTabs(){
   return(
@@ -244,7 +214,7 @@ function HomeTabs(){
         tabBarInactiveBackgroundColor:'powderblue'
       }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} options={{
+      <Tab.Screen name="Home" component={ProductsScreen} options={{
         tabBarStyle:{display:'none'},
         tabBarIcon: (tabInfo) => (<MaterialIcons name="home" size={22}/>)
       }}/>

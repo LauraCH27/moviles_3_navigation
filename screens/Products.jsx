@@ -63,7 +63,7 @@ export default function ProductsScreen({navigation, onPress}) {
           </TextInput>
           </View>
           <View style={{ flexDirection: 'row',justifyContent: 'center', marginTop:50}} >
-
+          <Text style={{fontSize:15,marginRight: 10}}>Estado:</Text>
           <Switch
             trackColor={{ false: "#757575", true: "#1BA792" }}
             thumbColor={disponible ? "#1BA792" : "#3e3e3e"}
@@ -83,18 +83,18 @@ export default function ProductsScreen({navigation, onPress}) {
             <View style={{flexDirection: 'row', justifyContent: 'center',
              marginTop:50,paddingHorizontal:30,
              paddingVertical:0,marginVertical:20}}>
-  <View>
-    <Button icon="login" 
-      mode="contained"
-      style={{marginTop:20, fontFamily:"Helvetica", backgroundColor: '#13907D', marginVertical:30, marginHorizontal: 10}}  
-    > GUARDAR </Button>
-  </View>
-  <View>
-    <Button icon="login" 
-      mode="contained"
-      style={{marginTop:20, fontFamily:"Helvetica", backgroundColor:'#13907D', marginVertical:30, marginHorizontal: 10}}  
-    > LISTAR </Button>
-  </View>
+          <View>
+          <Button icon="login" 
+            mode="contained"
+            style={{marginTop:20, fontFamily:"Helvetica", backgroundColor: '#13907D', marginVertical:30, marginHorizontal: 10, width:150}}  
+          > GUARDAR </Button>
+          </View>
+          <View>
+          <Button icon="login" 
+           mode="contained"
+           style={{marginTop:20, fontFamily:"Helvetica", backgroundColor:'#13907D', marginVertical:30, marginHorizontal:10,width:150}}  
+          > LISTAR </Button>
+          </View>
             
             
           </View>
@@ -151,8 +151,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
     borderWidth: 1,
-    borderColor: 'gray',
-    backgroundColor:'#E7EAE9',
+    borderColor: '#121715',
+    backgroundColor:'#CAE8DE',
     borderRadius: 5
    
     
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: '#121715',
     borderRadius: 5,
     //paddingHorizontal: 5,
     //paddingVertical: 5,

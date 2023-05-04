@@ -9,6 +9,7 @@ import { MaterialIcons} from '@expo/vector-icons'
 import contacts from './screens/contacts';
 import ProductsScreen from './screens/Products';
 import { useState,useEffect } from 'react';
+import RentaScreen from './screens/Renta';
 
 // Crear constante para generar las rutas de los screens
 
@@ -217,6 +218,10 @@ function HomeTabs(){
       <Tab.Screen name="Home" component={ProductsScreen} options={{
         tabBarStyle:{display:'none'},
         tabBarIcon: (tabInfo) => (<MaterialIcons name="home" size={22}/>)
+      }}/>
+      <Tab.Screen name="Renta" component={RentaScreen} options={{
+        tabBarStyle:{display:'none'},
+        tabBarIcon: (tabInfo) => (<MaterialIcons name="renta" size={22}/>)
       }}/>
        <Tab.Screen name="Registration" component={RegistrationScreen} options={{
         tabBarIcon: (tabInfo) => (<MaterialIcons name="register" size={22}/>)

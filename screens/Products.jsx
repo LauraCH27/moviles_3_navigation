@@ -12,9 +12,6 @@ export default function ProductsScreen({navigation, onPress}) {
     let [marca, setMarca] = useState('');
     let [disponible, setDisponible] = useState(false);
     let toggleSwitch = () => setDisponible(previousState => !previousState);
-    // const [field1, setField1] = useState('');
-    // const [field2, setField2] = useState('');
-    // const [field3, setField3] = useState('');
     const Table = ({ data }) => {
       return (
         <View style={styles.table}>
@@ -43,26 +40,24 @@ export default function ProductsScreen({navigation, onPress}) {
       const handleHideTableClick = () => {
         setShowTable(false);
       };
-    
       return (
         <View>
-          <TouchableOpacity onPress={handleListButtonClick}>
-          <View style={{ backgroundColor: '#1BA792', padding:10, marginTop:20, borderRadius:5 }}>
-            <Text style={{ color: '#FDFEFFC', textAlign: 'center', fontFamily:"Franklin Gothic Medium",fontSize:15 }}>Listar</Text>
-          </View>
+          
+          <TouchableOpacity>
+            <Button onPress={handleListButtonClick} 
+            icon="login" mode="contained" style={{marginTop:20, fontFamily:"Helvetica", backgroundColor:'#13907D', marginVertical:30, marginHorizontal:10,width:150}}> LISTAR </Button>
           </TouchableOpacity>
-    
+          
           {showTable && (
             <View>
               <View style={styles.table}>
               <Table data={cars}/>
               </View>
     
-              <TouchableOpacity onPress={handleHideTableClick}>
-              <View style={{ backgroundColor: '#1BA792', padding:10, marginTop:20, borderRadius:5 }}>
-            <Text style={{ color: '#FDFEFFC', textAlign: 'center', fontFamily:"Franklin Gothic Medium",fontSize:15 }}>Ocultar Lista</Text>
-          </View>
-              </TouchableOpacity>
+              <TouchableOpacity>
+            <Button onPress={handleHideTableClick} 
+            icon="login" mode="contained" style={{marginTop:20, fontFamily:"Helvetica", backgroundColor:'#13907D', marginVertical:30, marginHorizontal:10,width:150}}> OCULTAR </Button>
+          </TouchableOpacity>
             </View>
           )}
         </View>
@@ -116,48 +111,12 @@ export default function ProductsScreen({navigation, onPress}) {
             onValueChange={toggleSwitch}  
           />
           <Text>{disponible ? "Disponible" : "No disponible"}</Text>
-          <TouchableOpacity style={{}} onPress={()=> addCar(disponible)}>
-          <View style={{ backgroundColor: '#1BA792', padding:10, marginTop:20,borderRadius:5 }}>
-            <Text style={{ color: '#FDFEFFC', textAlign: 'center',
-            fontFamily:"Franklin Gothic Medium", borderRadius:10, fontSize:15 }}>Guardar</Text>
-          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'center', marginTop:50, paddingHorizontal:30, paddingVertical:0, marginVertical:20}}>
+          <TouchableOpacity onPress={() => addCar(disponible)}>
+            <Button icon="login" mode="contained" style={{marginTop:20, fontFamily:"Helvetica", backgroundColor: '#13907D', marginVertical:30, marginHorizontal: 10, width:150}}> GUARDAR </Button>
           </TouchableOpacity>
           <MyComponent cars={cars} />
-          {/* <TouchableOpacity onPress={() => {
-            handleListButtonClick();
-          }}>
-          <View style={{ backgroundColor: '#1BA792', padding:10, marginTop:20, borderRadius:5 }}>
-            <Text style={{ color: '#FDFEFFC', textAlign: 'center', fontFamily:"Franklin Gothic Medium",fontSize:15 }}>Listar</Text>
-            
-          </View>
-        </TouchableOpacity> */}
-        {/* <View style={{flexDirection: 'row', justifyContent: 'space-between',
-        marginHorizontal:15,marginTop:50,}}>
-      <View style={styles.column}>
-        <Text style={styles.label}>#placa</Text>
-        <TextInput
-          style={styles.input}
-          value={field1}
-          onChangeText={setField1}
-        />
-      </View>
-      <View style={styles.column}>
-        <Text style={styles.label}>Marca</Text>
-        <TextInput
-          style={styles.input}
-          value={field2}
-          onChangeText={setField2}
-        />
-      </View>
-      <View style={styles.column}>
-        <Text style={styles.label}>Estado</Text>
-        <TextInput
-          style={styles.input}
-          value={field3}
-          onChangeText={setField3}
-        />
-      </View>
-    </View> */}
+        </View>
           </View>
       );
 }
@@ -203,5 +162,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     textAlign: 'center',
   },
-
-  });
+});

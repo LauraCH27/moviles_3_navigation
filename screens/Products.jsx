@@ -74,33 +74,15 @@ export default function ProductsScreen({navigation, onPress}) {
          
           <View style={{ textAlign: 'center'}}>
           <Text>{disponible ? "Disponible" : "No disponible"}</Text>
-          <TouchableOpacity 
-            style={{ paddingHorizontal:10, paddingVertical:10 }} 
-            onPress={() => addCar(disponible)}
-          >
-            
-
-            <View style={{flexDirection: 'row', justifyContent: 'center',
-             marginTop:50,paddingHorizontal:30,
-             paddingVertical:0,marginVertical:20}}>
-          <View>
-          <Button icon="login" 
-            mode="contained"
-            style={{marginTop:20, fontFamily:"Helvetica", backgroundColor: '#13907D', marginVertical:30, marginHorizontal: 10, width:150}}  
-          > GUARDAR </Button>
-          </View>
-          <View>
-          <Button icon="login" 
-           mode="contained"
-           style={{marginTop:20, fontFamily:"Helvetica", backgroundColor:'#13907D', marginVertical:30, marginHorizontal:10,width:150}}  
-          > LISTAR </Button>
-          </View>
-            
-            
-          </View>
-          
-          
+          <View style={{flexDirection: 'row', justifyContent: 'center', marginTop:50, paddingHorizontal:30, paddingVertical:0, marginVertical:20}}>
+          <TouchableOpacity onPress={() => addCar(disponible)}>
+            <Button icon="login" mode="contained" style={{marginTop:20, fontFamily:"Helvetica", backgroundColor: '#13907D', marginVertical:30, marginHorizontal: 10, width:150}}> GUARDAR </Button>
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigateToList()}>
+            <Button icon="login" mode="contained" style={{marginTop:20, fontFamily:"Helvetica", backgroundColor:'#13907D', marginVertical:30, marginHorizontal:10,width:150}}> LISTAR </Button>
+          </TouchableOpacity>
+        </View>
+
           </View>    
           <View style={{flexDirection: 'row', justifyContent: 'center',
           marginHorizontal:15,marginVertical:30,marginTop:30,}}>

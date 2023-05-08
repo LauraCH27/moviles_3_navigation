@@ -60,8 +60,6 @@ function RegistrationScreen({navigation}) {
       alert('La contraseña debe contener al menos una letra y un número');
       return;
     }
-  
-
 
     const newUser = {
       name: name,
@@ -189,7 +187,7 @@ function HomeScreen({navigation}){
         const{name,username} = findUser
         setUsername('')
         setPassword('')
-        navigation.navigate('contacts',{name:name, username:username})
+        navigation.navigate('Products')
 
       }else{
         setErrormess('Correo y/o contraseña incorrecta');
@@ -215,12 +213,11 @@ function HomeTabs(){
         tabBarInactiveBackgroundColor:'powderblue'
       }}
     >
-      <Tab.Screen name="Home" component={ProductsScreen} options={{
-        tabBarStyle:{display:'none'},
+      <Tab.Screen name="Home" component={HomeScreen} options={{
+        //tabBarStyle:{display:'none'},
         tabBarIcon: (tabInfo) => (<MaterialIcons name="home" size={22}/>)
       }}/>
       <Tab.Screen name="Renta" component={RentaScreen} options={{
-        tabBarStyle:{display:'none'},
         tabBarIcon: (tabInfo) => (<MaterialIcons name="renta" size={22}/>)
       }}/>
        <Tab.Screen name="Registration" component={RegistrationScreen} options={{
@@ -229,9 +226,9 @@ function HomeTabs(){
       <Tab.Screen name="Products" component={ProductsScreen} options={{
         tabBarIcon: (tabInfo) => (<MaterialIcons name="apps" size={22}/>)
       }}/>
-      <Tab.Screen name="contacts" component={contacts} options={{
+      {/* <Tab.Screen name="contacts" component={contacts} options={{
         tabBarIcon: (tabInfo) => (<MaterialIcons name="chat" size={22}/>)
-      }}/>
+      }}/> */}
     </Tab.Navigator>
   );
 }
@@ -243,10 +240,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-/* function Contacts({navigation,route}){
-    return(
-        <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
-            <Text style={{marginBottom:10}}>Estamos en Contáctenos</Text>
-        </View>
-    );
-}*/
+

@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View,TouchableOpacity,Switch } from 'react-native';
 import { TextInput, Button} from 'react-native-paper';
 import { useState,useEffect } from 'react';
+import {CarsContext} from '../screens/Products'
+import React from 'react';
+  
 
 
-
-export default function RentaScreen({navigation, onPress}) {
+export default function RentaScreen({navigation, onPress }) {
   let [numAlquiler, setAlquiler] = useState('');
   let [nomUsuario, setUsuario] = useState('');
   let [matrícula, setMatrícula] = useState('');
@@ -12,8 +14,13 @@ export default function RentaScreen({navigation, onPress}) {
   const [disponible, setDisponible] = useState(false);
   const toggleDisponible = () => {
   setDisponible(previousState => !previousState);
-  
   };
+
+// const cars = React.useContext(CarsContext);
+const mostrarArreglo=()=>{
+
+  console.log(CarsContext)
+}
 
 return(
   <View style={styles.container}>
@@ -74,12 +81,11 @@ return(
     <Button icon="login" 
       mode="contained"
       style={{marginTop:20,fontFamily:"Helvetica", backgroundColor: '#13907D'}}  
+      onPress={mostrarArreglo}
     > RENTAR </Button>
     <Text style={{color:'red'}}></Text>
     </View>
     </View>
-   
-    
     );
 }
 const styles = StyleSheet.create({

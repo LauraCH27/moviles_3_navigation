@@ -1,16 +1,27 @@
 import { StyleSheet, Text, View,TouchableOpacity,Switch } from 'react-native';
 import { TextInput, Button} from 'react-native-paper';
 import { useState,useEffect } from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react';
+
+
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+const CarsContext = React.createContext([]);
 
 let cars=[
     {placa:'ABC123',marca:'chevrolet',disponible:true},{placa:'CDE456',marca:'mazda',disponible:false},
     {placa:'FGH789',marca:'ford',disponible:false},{placa:'IJK012',marca:'audi',disponible:true},
 ]
 
-export default function ProductsScreen({navigation, onPress}) {
+export default function ProductsScreen({navigation, onPress, props}) {
     let [placa, setPlaca] = useState('');
     let [marca, setMarca] = useState('');
     let [disponible, setDisponible] = useState(false);
+    const[errorplaca,setErrorplaca]=useState('')
+    const[errormarca,setErrormarca]=useState('')
     let toggleSwitch = () => setDisponible(previousState => !previousState);
     const Table = ({ data }) => {
       return (
@@ -42,9 +53,10 @@ export default function ProductsScreen({navigation, onPress}) {
       };
       return (
         <View>
-          
           <TouchableOpacity>
-            <Button onPress={handleListButtonClick} 
+            <Button 
+            onPress={
+              handleListButtonClick} 
             icon="login" mode="contained" style={{marginTop:20, fontFamily:"Helvetica", backgroundColor:'#13907D', marginVertical:30, marginHorizontal:10,width:150}}> LISTAR </Button>
           </TouchableOpacity>
           
@@ -53,7 +65,6 @@ export default function ProductsScreen({navigation, onPress}) {
               <View style={styles.table}>
               <Table data={cars}/>
               </View>
-    
               <TouchableOpacity>
             <Button onPress={handleHideTableClick} 
             icon="login" mode="contained" style={{marginTop:20, fontFamily:"Helvetica", backgroundColor:'#13907D', marginVertical:30, marginHorizontal:10,width:150}}> OCULTAR </Button>
@@ -88,21 +99,44 @@ export default function ProductsScreen({navigation, onPress}) {
           style={{marginBottom:10,marginTop:30}}
           label="Número de placa"
           mode="outlined"
-          
+          onFocus={()=>{setErrormarca(''),
+        setErrorplaca('')}}
           right={<TextInput.Icon icon=""/>}
-          onChangeText={(placa)=> setPlaca(placa)
+          onChangeText={(placa)=> {
+            const valid = /^[a-zA-Z0-9]*$/
+            if (valid.test(placa)) {
+              setErrorplaca('')
+              setPlaca(placa)
+            } else{
+              setPlaca('')
+              setErrorplaca('La marca debe contener sólo letras')
+            }
+          }
           }
           value={placa}>
             </TextInput>
+            <Text style={{color:'red'}}>{errorplaca}</Text>
           <TextInput
           style={{marginBottom:10}}
           label="Marca"
           mode="outlined"
-          onChangeText={(marca)=> setMarca(marca)
+          onFocus={()=>{setErrormarca(''),
+        setErrorplaca('')}}
+          onChangeText={(marca)=> {
+              const validar= /^[a-zA-Z\s]+$/;
+              if (validar.test(marca)) {
+                setMarca(marca)
+                setErrormarca('')
+              } else{
+                setMarca('')
+                setErrormarca('Debe ingresar solo letras y números')
+              }
+          }
           }
           value={marca}
           right={<TextInput.Icon icon=""/>} >
           </TextInput>
+          <Text style={{color:'red'}}>{errormarca}</Text>
 
           <Switch
             trackColor={{ false: "#767577", true: "#81b0ff" }}
@@ -113,11 +147,16 @@ export default function ProductsScreen({navigation, onPress}) {
           <Text>{disponible ? "Disponible" : "No disponible"}</Text>
           <View style={{flexDirection: 'row', justifyContent: 'center', marginTop:50, paddingHorizontal:30, paddingVertical:0, marginVertical:20}}>
           <TouchableOpacity onPress={() => addCar(disponible)}>
-            <Button icon="login" mode="contained" style={{marginTop:20, fontFamily:"Helvetica", backgroundColor: '#13907D', marginVertical:30, marginHorizontal: 10, width:150}}> GUARDAR </Button>
+            <Button 
+            icon="login" mode="contained" style={{marginTop:20, fontFamily:"Helvetica", backgroundColor: '#13907D', marginVertical:30, marginHorizontal: 10, width:150}}> GUARDAR </Button>
           </TouchableOpacity>
           <MyComponent cars={cars} />
+
         </View>
+          
+        
           </View>
+          
       );
 }
 const styles = StyleSheet.create({

@@ -15,11 +15,34 @@ export default function RentaScreen({navigation, onPress }) {
   const toggleDisponible = () => {
   setDisponible(previousState => !previousState);
   };
+  const [cars, setCars] = useState([]);
+  useEffect(() => {
+    const localCars = JSON.parse(localStorage.getItem('cars'));
+    if (localCars) {
+      setCars(localCars);
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const localCars = JSON.parse(localStorage.getItem('cars'));
+      if (localCars) {
+        setCars(localCars);
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
 
 // const cars = React.useContext(CarsContext);
 const mostrarArreglo=()=>{
 
-  console.log(CarsContext)
+  console.log(cars)
 }
 
 return(

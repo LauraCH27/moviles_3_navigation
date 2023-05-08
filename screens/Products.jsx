@@ -1,20 +1,14 @@
 import { StyleSheet, Text, View,TouchableOpacity,Switch } from 'react-native';
 import { TextInput, Button} from 'react-native-paper';
 import { useState,useEffect } from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-
-
-const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
-const CarsContext = React.createContext([]);
 
 let cars=[
     {placa:'ABC123',marca:'chevrolet',disponible:true},{placa:'CDE456',marca:'mazda',disponible:false},
     {placa:'FGH789',marca:'ford',disponible:false},{placa:'IJK012',marca:'audi',disponible:true},
 ]
+localStorage.setItem('cars', JSON.stringify(cars));
+let bandera= 0
 
 export default function ProductsScreen({navigation, onPress, props}) {
     let [placa, setPlaca] = useState('');
@@ -22,6 +16,8 @@ export default function ProductsScreen({navigation, onPress, props}) {
     let [disponible, setDisponible] = useState(false);
     const[errorplaca,setErrorplaca]=useState('')
     const[errormarca,setErrormarca]=useState('')
+    const [cars, setCars] = useState([]);
+    const [bandera, setBandera] = useState(0);
     let toggleSwitch = () => setDisponible(previousState => !previousState);
     const Table = ({ data }) => {
       return (
@@ -43,20 +39,23 @@ export default function ProductsScreen({navigation, onPress, props}) {
     };
     const MyComponent = ({ cars }) => {
       const [showTable, setShowTable] = useState(false);
-    
+      
       const handleListButtonClick = () => {
-        setShowTable(true);
-      };
-    
-      const handleHideTableClick = () => {
-        setShowTable(false);
+        if (showTable===false) {
+          setShowTable(true);
+        }
+         else if (showTable===true) {
+          setShowTable(false);
+        }
+      
       };
       return (
         <View>
           <TouchableOpacity>
             <Button 
-            onPress={
-              handleListButtonClick} 
+            onPress={ ()=>{
+              handleListButtonClick();
+              } }
             icon="login" mode="contained" style={{marginTop:20, fontFamily:"Helvetica", backgroundColor:'#13907D', marginVertical:30, marginHorizontal:10,width:150}}> LISTAR </Button>
           </TouchableOpacity>
           
@@ -65,27 +64,28 @@ export default function ProductsScreen({navigation, onPress, props}) {
               <View style={styles.table}>
               <Table data={cars}/>
               </View>
-              <TouchableOpacity>
-            <Button onPress={handleHideTableClick} 
-            icon="login" mode="contained" style={{marginTop:20, fontFamily:"Helvetica", backgroundColor:'#13907D', marginVertical:30, marginHorizontal:10,width:150}}> OCULTAR </Button>
-          </TouchableOpacity>
             </View>
           )}
         </View>
       );
     };
-    const addCar= () => {
-    let newCar= {
-        placa: placa,
-        marca: marca,
-        disponible: disponible
-    };
-    cars.push(newCar);
-    setPlaca('');
-    setMarca('');
-    setDisponible(false);
-    console.log(cars);
-    }
+    
+
+    useEffect(()=> {
+      const carsFromLocalStorage = JSON.parse(localStorage.getItem('cars')) || [];
+        setCars(carsFromLocalStorage);
+      }, [])
+      const addCar = () => {
+        let newCar= {
+          placa: placa,
+          marca: marca,
+          disponible: disponible
+      };
+        const newCars = [...cars, newCar]; // Crear una copia del arreglo original para actualizarlo
+        setCars(newCars);
+        localStorage.setItem('cars', JSON.stringify(newCars)); // Actualizar el arreglo en localStorage
+        console.log(cars)
+      };
 
     return(
         <View style={{flex: 1,
